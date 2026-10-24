@@ -1,3 +1,5 @@
+.venv/
+
 # Local runtime data and downloaded model
 friday.log
 friday.log.*
