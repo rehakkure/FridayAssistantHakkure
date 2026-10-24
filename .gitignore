@@ -1,0 +1,15 @@
+# Local runtime data and downloaded model
+friday.log
+friday.log.*
+models/
+
+# Generated/build artifacts and Python cache
+__pycache__/
+*.py[cod]
+build/
+dist/
+*.spec
+
+# Local tools / patches with machine-specific paths
+_patch_friday*.py
+patch_friday_for_pyinstaller.py

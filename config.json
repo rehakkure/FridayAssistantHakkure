@@ -1,0 +1,18 @@
+{
+  "assistant_name": "Пятница",
+  "app_name": "Friday Assistant",
+  "model_path": "models/vosk-model-small-ru-0.22",
+  "model_urls": [
+    "https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip",
+    "https://github.com/alphacep/vosk-api/releases/download/v0.3.45/vosk-model-small-ru-0.22.zip"
+  ],
+  "log_file": "friday.log",
+  "log_level": "INFO",
+  "max_log_bytes": 1048576,
+  "backup_count": 3,
+  "sample_rate": 16000,
+  "audio_chunk": 4000,
+  "tts_rate": 180,
+  "tts_volume": 1,
+  "input_device_index": null
+}
