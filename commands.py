@@ -17,7 +17,8 @@ from typing import Callable, Optional
 
 import pyautogui
 
-pyautogui.FAILSAFE = False
+# Keep the emergency corner failsafe enabled.
+pyautogui.FAILSAFE = True
 pyautogui.PAUSE = 0
 
 APP_NAME = "Friday Assistant"
@@ -669,7 +670,13 @@ def safe_eval(node: ast.AST):
     if isinstance(node, ast.BinOp) and type(node.op) in {ast.Add, ast.Sub, ast.Mult, ast.Div, ast.Mod, ast.Pow}:
         left = safe_eval(node.left)
         right = safe_eval(node.right)
-        return eval(compile(ast.Expression(ast.BinOp(ast.Constant(left), node.op, ast.Constant(right))), "<math>", "eval"))
+        operations = {ast.Add: lambda a, b: a + b, ast.Sub: lambda a, b: a - b, ast.Mult: lambda a, b: a * b, ast.Div: lambda a, b: a / b, ast.Mod: lambda a, b: a % b, ast.Pow: lambda a, b: a ** b}
+        if isinstance(node.op, ast.Pow) and (abs(right) > 100 or abs(left) > 10**6):
+            raise ValueError("Exponent is too large")
+        result = operations[type(node.op)](left, right)
+        if isinstance(result, int) and result.bit_length() > 4096:
+            raise ValueError("Result is too large")
+        return result
     if isinstance(node, ast.UnaryOp) and type(node.op) in {ast.UAdd, ast.USub}:
         operand = safe_eval(node.operand)
         return +operand if isinstance(node.op, ast.UAdd) else -operand
